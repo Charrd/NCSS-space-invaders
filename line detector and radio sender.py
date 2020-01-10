@@ -33,28 +33,48 @@ def line_sensor():
         return
     else:
         return True
-class line:
+
+class SensorCount:
+    global direction
     def __init__(self):
         self.pin = pin11
         self.state = False
+        self.count = 1
     def update(self):
         if not self.pin.read_digital() and not self.state:
             self.state = True
+            if direction:
+                self.count += 1
+            else:
+                self.count -= 1
+        elif self.pin.read_digital() and self.state:
+            self.state = False
+            if direction:
+                self.count += 1
+            else:
+                self.count -= 1
+
+bitbot_counter = SensorCount()
 
 
-
-linenumber = 0
 shoot = False
-direction = True
-count = 0
-n = 6
+direction =True
+
+n = 8
 move('FOR', 1023)
 
+
+
 while True:
+    update(bitbot_counter)
     msg = radio.receive()
     if msg:
         if msg == 'shoot':
             shoot = True
+        if msg == 'BACK':
+            direction = False
+        elif msg == 'FOR':
+            direction = True
     if line_sensor():
         if shoot == True:
             msg = str(linenumber) + 'hit'
@@ -68,7 +88,8 @@ while True:
     else:
         shoot = False
         display.clear()
-    if (count == n and direction) or (count == 0 and not direction):
+    
+    if (bitbot_counter.count == n and direction) or (bitbot_counter.count == 0 and not direction):
         stop()
     else:
         if direction:

@@ -9,6 +9,6 @@ radio.config(channel=31)
 
 while True:
     if button_a.was_pressed():
-        radio.send("LEFT")
+        radio.send("BACK")
     if button_b.was_pressed():
-        radio.send("RIGHT")
+        radio.send("FOR")
