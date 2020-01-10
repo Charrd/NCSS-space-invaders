@@ -37,9 +37,9 @@ def line_sensor():
         return True
 
 class SensorCount:
-    
+
     def __init__(self):
-        global direction 
+        global direction
         self.pin = pin11
         self.state = False
         self.count = 1
@@ -65,6 +65,7 @@ move('FOR', 1023)
 
 while True:
     bitbot_counter.update()
+    display.show(bitbot_counter.count)
     msg = radio.receive()
     if msg:
         if msg == 'shoot':
@@ -75,9 +76,8 @@ while True:
             direction = True
     if line_sensor():
         if shoot == True:
-            msg = str(linenumber) + 'hit'
+            msg = str(bitbot_counter.count) + 'hit'
             display.show(Image.GIRAFFE)
-            sleep(3000)
             radio.send(msg)
             shoot = False
         else:
@@ -86,10 +86,9 @@ while True:
     else:
         shoot = False
         display.clear()
-    
+
     if (bitbot_counter.count >= n and direction) or (bitbot_counter.count <= 0 and not direction):
         stop()
-        sleep(400)
     else:
         if direction:
             move('FOR', 1023)

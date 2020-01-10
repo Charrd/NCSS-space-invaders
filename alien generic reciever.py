@@ -3,7 +3,7 @@ import radio
 
 radio.on()
 radio.config(channel=31)
-alienID = 0
+alienID = 4
 alive = True
 
 
@@ -12,6 +12,7 @@ while True:
     msg = radio.receive()
     if msg and alive:
         if msg.startswith(str(alienID)):
+            sleep(1000)
             display.show(Image.NO)
             hit = True
             alive = False
