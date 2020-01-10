@@ -4,7 +4,9 @@ import radio
 
 radio.on()
 radio.config(channel=31)
-
+shoot = False
+direction =True
+n = 8
 
 def move(fb, spd):
     if fb == 'FOR' or fb == 'FORWARD':
@@ -35,8 +37,9 @@ def line_sensor():
         return True
 
 class SensorCount:
-    global direction
+    
     def __init__(self):
+        global direction 
         self.pin = pin11
         self.state = False
         self.count = 1
@@ -57,16 +60,11 @@ class SensorCount:
 bitbot_counter = SensorCount()
 
 
-shoot = False
-direction =True
 
-n = 8
 move('FOR', 1023)
 
-
-
 while True:
-    update(bitbot_counter)
+    bitbot_counter.update()
     msg = radio.receive()
     if msg:
         if msg == 'shoot':
@@ -89,10 +87,11 @@ while True:
         shoot = False
         display.clear()
     
-    if (bitbot_counter.count == n and direction) or (bitbot_counter.count == 0 and not direction):
+    if (bitbot_counter.count >= n and direction) or (bitbot_counter.count <= 0 and not direction):
         stop()
+        sleep(400)
     else:
         if direction:
             move('FOR', 1023)
         else:
-            move('BACK', 1023)
+            move('BACK', 0)
