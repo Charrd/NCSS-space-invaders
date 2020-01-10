@@ -17,5 +17,7 @@ while True:
             hit = True
             alive = False
             sleep(50)
+            radio.send('DEAD')
+            break
     if alive:
         display.show(Image.GHOST)

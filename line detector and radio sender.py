@@ -6,7 +6,9 @@ radio.on()
 radio.config(channel=31)
 shoot = False
 direction =True
-n = 8
+n = 6
+numberalive = 2
+timer = 200000
 
 def move(fb, spd):
     if fb == 'FOR' or fb == 'FORWARD':
@@ -19,7 +21,6 @@ def move(fb, spd):
         pin1.write_analog(spd)
         pin8.write_digital(1)
         pin12.write_digital(1)
-
 
 def stop():
     pin8.write_digital(0)
@@ -65,7 +66,9 @@ move('FOR', 1023)
 
 while True:
     bitbot_counter.update()
-    display.show(bitbot_counter.count)
+    if (timer - running_time()) <= 1:
+        win = False
+        break
     msg = radio.receive()
     if msg:
         if msg == 'shoot':
@@ -74,18 +77,23 @@ while True:
             direction = False
         elif msg == 'FOR':
             direction = True
+        if msg == 'DEAD':
+            numberalive -= 1
+            if numberalive == 0:
+                stop()
+                winning_time = int((timer - running_time())/1000)
+                win = True
+                break
+        
     if line_sensor():
         if shoot == True:
             msg = str(bitbot_counter.count) + 'hit'
-            display.show(Image.GIRAFFE)
             radio.send(msg)
             shoot = False
         else:
-            display.clear()
             shoot = False
     else:
         shoot = False
-        display.clear()
 
     if (bitbot_counter.count >= n and direction) or (bitbot_counter.count <= 0 and not direction):
         stop()
@@ -94,3 +102,9 @@ while True:
             move('FOR', 1023)
         else:
             move('BACK', 0)
+display.clear()
+if win:
+    display.scroll('YOU WIN')
+    display.scroll(winning_time)
+else:
+    display.scroll('YOU SUCK')
