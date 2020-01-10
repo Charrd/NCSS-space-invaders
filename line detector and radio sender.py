@@ -33,12 +33,19 @@ def line_sensor():
         return
     else:
         return True
+class line:
+    def __init__(self):
+        self.pin = pin11
+        self.state = False
+    def update(self):
+        if not self.pin.read_digital() and not self.state:
+            self.state = True
+
+
 
 linenumber = 0
-drive_state = 'left'
 shoot = False
-
-direc = True
+direction = True
 count = 0
 n = 6
 move('FOR', 1023)
@@ -61,10 +68,10 @@ while True:
     else:
         shoot = False
         display.clear()
-    if (count == n and direc) or (count == 0 and not direc):
+    if (count == n and direction) or (count == 0 and not direction):
         stop()
     else:
-        if direc:
+        if direction:
             move('FOR', 1023)
         else:
             move('BACK', 1023)
