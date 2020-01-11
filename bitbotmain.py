@@ -69,7 +69,6 @@ move('FOR', 700)
 
 while True:
     bitbot_counter.update()
-    display.show(bitbot_counter.count)
     if (timer - running_time()) <= 1:
         win = False
         break
@@ -78,12 +77,6 @@ while True:
         if msg == 'SHOOT':
             shoot = True
             np = neopixel.NeoPixel(neopixel_pin, neopixel_num)
-            for i in range(6):
-                np[i] = (50, 210, 50)
-                np[i+6] = (50, 210, 50)
-                np.show()
-                sleep(30)
-            np.clear()
         if msg == 'BACK':
             direction = False
         elif msg == 'FOR':
@@ -99,6 +92,12 @@ while True:
     if line_sensor():
         if shoot:
             msg = str(bitbot_counter.count) + 'hit'
+            for i in range(6):
+                np[i] = (50, 210, 50)
+                np[i+6] = (50, 210, 50)
+                np.show()
+                sleep(30)
+            np.clear()
             radio.send(msg)
             shoot = False
         else:
