@@ -115,7 +115,8 @@ while True:
             move('BACK', 0)
 display.clear()
 if win:
-    display.scroll('YOU WIN')
-    display.scroll(winning_time)
+    msg = 'WON' + winning_time
 else:
-    display.scroll('YOU SUCK')
+    msg = 'LOST'
+radio.send(msg)
+    
