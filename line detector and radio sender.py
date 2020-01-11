@@ -1,6 +1,8 @@
 # Write your code here :-)
 from microbit import *
 import radio
+import neopixel
+
 
 radio.on()
 radio.config(channel=31)
@@ -9,6 +11,8 @@ direction =True
 n = 6
 numberalive = 2
 timer = 200000
+neopixel_pin = pin13
+neopixel_num = 12
 
 def move(fb, spd):
     if fb == 'FOR' or fb == 'FORWARD':
@@ -73,6 +77,13 @@ while True:
     if msg:
         if msg == 'shoot':
             shoot = True
+            np = neopixel.NeoPixel(neopixel_pin, neopixel_num)
+            for i in range(6):
+                np[i] = (50, 210, 50)
+                np[i+6] = (50, 210, 50)
+                np.show()
+                sleep(150)
+            np.clear()
         if msg == 'BACK':
             direction = False
         elif msg == 'FOR':
