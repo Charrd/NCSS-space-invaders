@@ -75,7 +75,7 @@ while True:
         break
     msg = radio.receive()
     if msg:
-        if msg == 'shoot':
+        if msg == 'SHOOT':
             shoot = True
             np = neopixel.NeoPixel(neopixel_pin, neopixel_num)
             for i in range(6):

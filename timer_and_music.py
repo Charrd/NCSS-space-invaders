@@ -15,8 +15,10 @@ while True:
     msg = radio.receive()
     if msg:
         if msg.startswith('WON'):
+            music.stop()
             words = msg.split()
             display.scroll('YOU WON')
             display.scroll(words[1])
         elif msg == 'LOST':
+            music.stop()
             display.scroll('YOU LOST')

@@ -11,7 +11,7 @@ while True:
     if accelerometer.was_gesture("shake"):
         display.show(Image.ARROW_N)
         sleep(50)
-        radio.send('shoot')
+        radio.send('SHOOT')
         #cool down
         sleep(3000)
     else:
