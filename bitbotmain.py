@@ -9,7 +9,8 @@ shoot = False
 direction =True
 n = 8
 numberalive = 3
-timer = 50000
+timer = 5
+0000
 neopixel_pin = pin13
 neopixel_num = 12
 
