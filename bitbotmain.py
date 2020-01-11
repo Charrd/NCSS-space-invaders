@@ -7,9 +7,9 @@ radio.on()
 radio.config(channel=31)
 shoot = False
 direction =True
-n = 6
-numberalive = 2
-timer = 200000
+n = 8
+numberalive = 3
+timer = 50000
 neopixel_pin = pin13
 neopixel_num = 12
 

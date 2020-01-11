@@ -8,7 +8,7 @@ neo = neopixel.NeoPixel(pin0, n)
 
 radio.on()
 radio.config(channel=31)
-alienID = 4
+alienID = 2
 alive = True
 
 

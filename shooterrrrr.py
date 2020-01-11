@@ -9,7 +9,7 @@ radio.config(channel=31)
 
 while True:
     if accelerometer.was_gesture("shake"):
-        display.show(Image.ARROW_N)
+        display.show(Image.TARGET)
         sleep(50)
         radio.send('SHOOT')
         #cool down
