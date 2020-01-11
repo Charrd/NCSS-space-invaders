@@ -1,4 +1,3 @@
-# Write your code here :-)
 from microbit import *
 import radio
 import neopixel
@@ -66,10 +65,11 @@ bitbot_counter = SensorCount()
 
 
 
-move('FOR', 1023)
+move('FOR', 700)
 
 while True:
     bitbot_counter.update()
+    display.show(bitbot_counter.count)
     if (timer - running_time()) <= 1:
         win = False
         break
@@ -82,7 +82,7 @@ while True:
                 np[i] = (50, 210, 50)
                 np[i+6] = (50, 210, 50)
                 np.show()
-                sleep(150)
+                sleep(30)
             np.clear()
         if msg == 'BACK':
             direction = False
@@ -97,7 +97,7 @@ while True:
                 break
         
     if line_sensor():
-        if shoot == True:
+        if shoot:
             msg = str(bitbot_counter.count) + 'hit'
             radio.send(msg)
             shoot = False
@@ -110,13 +110,12 @@ while True:
         stop()
     else:
         if direction:
-            move('FOR', 1023)
+            move('FOR', 700)
         else:
-            move('BACK', 0)
+            move('BACK', 323)
 display.clear()
 if win:
-    msg = 'WON' + winning_time
+    msg = 'WON ' + str(winning_time)
 else:
     msg = 'LOST'
 radio.send(msg)
-    
